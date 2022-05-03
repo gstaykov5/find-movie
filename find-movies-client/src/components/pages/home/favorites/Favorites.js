@@ -17,7 +17,7 @@ function Favorites() {
       <Hero />
       <Typography variant="h6" sx={{ marginTop: '30px', fontSize: '30px' }}>Your Favorites</Typography>
       {isLoading && <div>Loading.....</div>}
-      <Card movies={movies}/>
+      <Card />
     </div>
   )
 }

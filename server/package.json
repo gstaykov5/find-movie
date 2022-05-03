@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "SET NODE_ENV=development && nodemon ./server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gstaykov5/find-movie.git"
+  },
+  "author": "Georgi Staykov",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/gstaykov5/find-movie/issues"
+  },
+  "homepage": "https://github.com/gstaykov5/find-movie#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button, ButtonBase, Grid, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function MovieDetails({ movies }) {
   
@@ -10,7 +11,10 @@ function MovieDetails({ movies }) {
       <Grid item container direction="column" spacing={2}>
         <Grid item xs>
             <Typography gutterBottom variant="h5" component="div" mb={2} mt={1} align='left'>
-          <ButtonBase sx={{ fontSize: '25px' }}>
+          <ButtonBase 
+            sx={{ fontSize: '25px' }} 
+            component={Link}
+            to={`/movies/${movie.name}`}>
               {movie.name}
           </ButtonBase>
             </Typography>
@@ -23,6 +27,7 @@ function MovieDetails({ movies }) {
         </Grid>
         <Grid item>
           <Typography variant="body2" sx={{mb: 4}} align='left'>
+            {/* <Link to={{pathname: movie.url}} target='_blank'>Visit official site</Link> */}
             {movie.url}
           </Typography>
           <Button variant='outlined' color='success' sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>

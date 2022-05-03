@@ -8,7 +8,7 @@ import { Box } from '@mui/system';
 import Card from '../../shared/card/Card';
 import MovieDetails from '../../shared/movie-details/MovieDetails';
 import SearchInput from '../../shared/search/Search';
-import { fetchMovies } from '../../features/movies/moviesSlice';
+import { fetchMovies } from '../../../features/movies/moviesSlice';
 
 function Search() {
   const dispatch = useDispatch();
