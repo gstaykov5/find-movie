@@ -1,6 +1,7 @@
-import { Button, Grid, Typography } from '@mui/material';
-
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { Button, Grid, Typography } from '@mui/material';
 
 export default function Hero() {
   return (
@@ -10,15 +11,23 @@ export default function Hero() {
         marginBottom: '10px',
         width: 'auto',
         height: 300,
-        backgroundColor: '#d1d3d4',
-        '&:hover': {
-          backgroundColor: 'primary.main',
-          opacity: [0.9, 0.8, 0.7],
-        },
+        boxShadow: '1px 1px 10px black',
+        backgroundImage: `url(${'https://c8.alamy.com/comp/D5DDDC/old-grunge-film-frame-vintage-background-D5DDDC.jpg'})`,
       }}
     >
-      <Typography>Movies</Typography>
-      <Button>Search</Button>
+
+      <Grid
+        item
+        container 
+        width='auto'
+        sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', ml: 18 }}>
+      <Grid item xs={4} >
+        <Typography mt={17} ml={1} variant='h6' fontSize='24px'>In this site you can find and store you favorite movies</Typography>
+      </Grid>
+      <Grid item >
+        <Button component={Link} to='/search' variant="contained" color="primary" sx={{m: '10px' }}>Search</Button>
+      </Grid>
+    </Grid>
     </Grid>
   )
 }

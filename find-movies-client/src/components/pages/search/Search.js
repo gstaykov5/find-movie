@@ -1,11 +1,25 @@
-import { Grid, Paper, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import React from 'react'
-import Card from '../../shared/card/Card'
-import MovieDetails from '../../shared/movie-details/MovieDetails'
-import SearchInput from '../../shared/search/Search'
+import React, { useEffect } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Grid, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+
+import Card from '../../shared/card/Card';
+import MovieDetails from '../../shared/movie-details/MovieDetails';
+import SearchInput from '../../shared/search/Search';
+import { fetchMovies } from '../../features/movies/moviesSlice';
 
 function Search() {
+  const dispatch = useDispatch();
+  const { movies, isLoading} = useSelector(state => state.moviesReducer);
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch])
+
+  console.log(movies)
+
   return (
     <div>
       <Typography variant='h6' sx={{mt: 3, mb: 3}}>Search</Typography>
@@ -19,7 +33,7 @@ function Search() {
         <SearchInput />
       </Grid>
 
-      <Paper
+      <Box
       sx={{
         p: 2,
         margin: 'auto',
@@ -28,37 +42,12 @@ function Search() {
       }}
       >
       <Grid container spacing={2}>
+        {isLoading && <div>Loading...</div>}
         <Card />
-        <MovieDetails />
-      </Grid>
-      </Paper>
+        <MovieDetails movies={movies} />
 
-      {/* <Box
-        sx={{
-          width: 'auto',
-          height: 300,
-          backgroundColor: 'primary.dark',
-          '&:hover': {
-            backgroundColor: 'primary.main',
-            opacity: [0.9, 0.8, 0.7],
-          },
-        }}
-      >
-        <Grid
-        container
-        spacing={0}
-        direction="row"
-        alignItems="center"
-        justify="center"
-        >
-          <Grid item lg={2} sx={{ border: '1px solid black' }}>
-            <Card />
-          </Grid>
-          <Grid item lg={10} sx={{ border: '1px solid black' }}>
-            <MovieDetails />
-          </Grid>
-        </Grid>
-      </Box> */}
+      </Grid>
+      </Box>
     </div>
   )
 }
