@@ -1,5 +1,13 @@
 const FavoriteModel = require('../models/favorite');
 
-exports.setFavorite = favoriteId => FavoriteModel.create(favoriteId);
+exports.setFavorite = movieId => FavoriteModel.create(movieId);
 
-exports.getFavorite = () => FavoriteModel.find();
+exports.getFavorites = () => FavoriteModel.find();
+
+exports.updateFavorites = (collectionId, movieId, action) => {
+    if(action === 'push') {
+        return FavoriteModel.findByIdAndUpdate(collectionId, {$addToSet: {favorites: movieId}});
+    } else {
+        return FavoriteModel.findByIdAndUpdate(collectionId, {$pull: {favorites: movieId}});
+    }
+}

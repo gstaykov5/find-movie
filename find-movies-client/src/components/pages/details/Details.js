@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Grid, Rating, TextField, Typography } from '@mui/material';
 import Card from '../../shared/card/Card';
 import MovieDetails from '../../shared/movie-details/MovieDetails';
 import StarIcon from '@mui/icons-material/Star';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovieDetail } from '../../../features/movies/moviesSlice';
 
 const labels = {
   0.5: 'Useless',
@@ -25,7 +28,15 @@ function getLabelText(value) {
 function Details() {
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
+  const { movieTitle } = useParams();
 
+  const dispatch = useDispatch();
+  const { movieDetail } = useSelector(state => state.moviesReducer);
+  
+  useEffect(() => {
+    dispatch(fetchMovieDetail(movieTitle));
+  }, [dispatch, movieTitle])
+  
   return (
     <Box
       sx={{
@@ -36,8 +47,13 @@ function Details() {
       }}
       >
       <Grid container spacing={2}>
-        <Card />
-        <MovieDetails />
+      {movieDetail.length === 0 ? (
+          <div>Loading...</div>
+        ) : (
+        <>
+          <Card movies={[movieDetail]} />
+          <MovieDetails movies={[movieDetail]} />
+        </>)}
       </Grid>
 
       <Typography variant='h5' align='left' ml={10} mb={1}>Your Review</Typography>

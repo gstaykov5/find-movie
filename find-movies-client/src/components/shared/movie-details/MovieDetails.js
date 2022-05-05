@@ -1,16 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, ButtonBase, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+
+import { addToFavorites, getFavoriteMovies, postFavoriteMovie, removeToFavorites, updateFavoriteMovie } from '../../../features/movies/moviesSlice';
 
 function MovieDetails({ movies }) {
+  const dispatch = useDispatch();
   
+  const { favoriteMovies } = useSelector(state => state.moviesReducer);
+
+  useEffect(() => {
+    dispatch(getFavoriteMovies());
+  }, [dispatch])
+
+  const handleFavorite = (e, movie, action) => {
+    if(favoriteMovies.length === 0) {
+      const movieId =  {
+        favorites: [movie.id]
+      }
+      console.log('first favorite movie: ',favoriteMovies)
+      dispatch(postFavoriteMovie(movieId));
+    } else {
+      const movieAndCollectionId = {
+        movieId: movie.id,
+        collectionId: favoriteMovies[0]._id,
+        action
+      }
+      if(e.target.innerText === 'ADD TO FAVORITE') {
+        // movieAndCollectionId.action = 'push';
+        dispatch(updateFavoriteMovie(movieAndCollectionId));
+        dispatch(addToFavorites(movie.id));
+      } else {
+        // movieAndCollectionId.action = 'pull';
+        dispatch(updateFavoriteMovie(movieAndCollectionId));
+        dispatch(removeToFavorites(movie.id));
+      }
+    }
+  }
+
   return (
     <Grid item xs={10} sm container ml={4}>
       {movies.map(movie => (
-      <Grid item container direction="column" spacing={2}>
+      <Grid item container direction="column" spacing={2} key={movie.id}>
         <Grid item xs>
-            <Typography gutterBottom variant="h5" component="div" mb={2} mt={1} align='left'>
+            <Typography gutterBottom variant="h5" component="div" mb={2} mt={2} align='left'>
           <ButtonBase 
             sx={{ fontSize: '25px' }} 
             component={Link}
@@ -30,9 +65,15 @@ function MovieDetails({ movies }) {
             {/* <Link to={{pathname: movie.url}} target='_blank'>Visit official site</Link> */}
             {movie.url}
           </Typography>
-          <Button variant='outlined' color='success' sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-            Add to favorite
-          </Button>
+          {favoriteMovies[0]?.favorites.includes(movie.id) ? (
+            <Button variant='outlined' color='error' onClick={(e) => handleFavorite(e, movie, 'pull')} sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+              Remove from Favorite
+            </Button>
+          ) : (
+            <Button variant='outlined' color='success' onClick={(e) => handleFavorite(e, movie, 'push')} sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+              Add To Favorite
+            </Button>
+          )}
         </Grid>
       </Grid>
       ))}

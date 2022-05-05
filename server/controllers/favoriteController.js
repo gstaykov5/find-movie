@@ -6,10 +6,10 @@ router.post('/movies', async (req, res) => {
     const movieId = req.body;
 
     try {
-        const favorite = await favoriteService.setFavorite(movieId);
+        const favorites = await favoriteService.setFavorite(movieId);
 
         res.status(200).json({
-            favorite: favorite,
+            favorites
         });
     } catch (error) {
         res.json({
@@ -19,12 +19,30 @@ router.post('/movies', async (req, res) => {
     }
 })
 
-router.get('/movies', (req, res) => {
+router.get('/movies', async (req, res) => {
     try {
-        const favorites = favoriteService.getFavorites();
+        const favorites = await favoriteService.getFavorites();
 
         res.status(200).json({
-            favorites: favorites,
+            favorites,
+        });
+    } catch (error) {
+        res.json({
+            type: error,
+            message: error.message
+        })
+    }
+})
+
+router.post('/movies/:collectionId', async (req, res) => {
+    const collectionId = req.params.collectionId;
+    const { movieId, action } = req.body;
+
+    try {
+        const favorites = await favoriteService.updateFavorites(collectionId, movieId, action);
+console.log(favorites)
+        res.status(200).json({
+            favorites,
         });
     } catch (error) {
         res.json({

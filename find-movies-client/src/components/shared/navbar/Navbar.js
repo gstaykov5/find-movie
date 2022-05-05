@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import SearchInput from '../search/Search';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
@@ -30,7 +31,9 @@ function Navbar() {
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textAlign: 'left', color: 'black'}}
             >
-              My Movie Collection
+              <Link to='/'>
+                My Movie Collection
+              </Link>
             </Typography>
 
             <SearchInput />

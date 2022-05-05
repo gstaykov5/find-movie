@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const FavoriteMovie = new mongoose.Schema({
-    favorites: [Number],
+    favorites: [],
 })
 
 const Favorite = mongoose.model('FavoriteMovie', FavoriteMovie);

@@ -1,18 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Grid, ImageListItem } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-function Card() {
-  const movies = useSelector(state => state.moviesReducer.movies);
-
+function Card({ movies }) {
+  console.log(movies)
   return (
     <Grid item container xs={2} >
       {movies.map((movie) => (
         <ImageListItem 
           key={movie.id}
-          sx={{ width: '200px',height: '50px', mb: 3 }} 
+          sx={{ width: '200px',height: '50px', mb: 2 }} 
           component={Link}
           to={`/movies/${movie.name}`}
         >

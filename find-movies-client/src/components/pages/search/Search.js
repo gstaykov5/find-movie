@@ -12,13 +12,12 @@ import { fetchMovies } from '../../../features/movies/moviesSlice';
 
 function Search() {
   const dispatch = useDispatch();
+
   const { movies, isLoading} = useSelector(state => state.moviesReducer);
 
   useEffect(() => {
     dispatch(fetchMovies());
   }, [dispatch])
-
-  console.log(movies)
 
   return (
     <div>
@@ -41,11 +40,15 @@ function Search() {
         flexGrow: 1,
       }}
       >
-      <Grid container spacing={2}>
-        {isLoading && <div>Loading...</div>}
-        <Card />
-        <MovieDetails movies={movies} />
-
+      <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center'}}>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+        <>
+          <Card movies={movies} />
+          <MovieDetails movies={movies} />
+        </>
+        )}
       </Grid>
       </Box>
     </div>
