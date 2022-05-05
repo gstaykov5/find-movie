@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import SearchInput from '../search/Search';
+import SearchInput from '../search/SearchInput';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
@@ -31,7 +31,7 @@ function Navbar() {
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textAlign: 'left', color: 'black'}}
             >
-              <Link to='/'>
+              <Link to='/' style={{ textDecoration: 'none' }}>
                 My Movie Collection
               </Link>
             </Typography>

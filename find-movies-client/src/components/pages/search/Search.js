@@ -1,23 +1,15 @@
-import React, { useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
 import Card from '../../shared/card/Card';
 import MovieDetails from '../../shared/movie-details/MovieDetails';
-import SearchInput from '../../shared/search/Search';
-import { fetchMovies } from '../../../features/movies/moviesSlice';
+import SearchInput from '../../shared/search/SearchInput';
 
 function Search() {
-  const dispatch = useDispatch();
-
-  const { movies, isLoading} = useSelector(state => state.moviesReducer);
-
-  useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch])
+  const { isLoading, searchedMovies } = useSelector(state => state.moviesReducer);
 
   return (
     <div>
@@ -45,8 +37,8 @@ function Search() {
           <div>Loading...</div>
         ) : (
         <>
-          <Card movies={movies} />
-          <MovieDetails movies={movies} />
+          <Card movies={searchedMovies} />
+          <MovieDetails movies={searchedMovies} />
         </>
         )}
       </Grid>

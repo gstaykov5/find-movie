@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, ButtonBase, Grid, Typography } from '@mui/material';
 
-import { addToFavorites, getFavoriteMovies, postFavoriteMovie, removeToFavorites, updateFavoriteMovie } from '../../../features/movies/moviesSlice';
+import { addToFavorites, getFavoriteMovies, postFavoriteMovie, removeFromFavorites, updateFavoriteMovie } from '../../../features/movies/moviesSlice';
 
 function MovieDetails({ movies }) {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function MovieDetails({ movies }) {
       } else {
         // movieAndCollectionId.action = 'pull';
         dispatch(updateFavoriteMovie(movieAndCollectionId));
-        dispatch(removeToFavorites(movie.id));
+        dispatch(removeFromFavorites(movie.id));
       }
     }
   }

@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToSearchedMovies } from '../../../features/movies/moviesSlice';
+import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,6 +53,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function SearchInput() {
+  const [term, setTerm] = useState('');
+
+  const dispatch = useDispatch();
+
+  const { movies } = useSelector(state => state.moviesReducer);
+
+  const handleSearchTerm = () => {
+    const search = movies.filter(movie => movie.name.toLowerCase().includes(term.toLowerCase()));
+    dispatch(addToSearchedMovies(search));
+    setTerm('')
+  }
+  
   return (
     <Fragment>
       <Search>
@@ -57,10 +72,21 @@ function SearchInput() {
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
+          value={term}
           placeholder="Search by movie title"
           inputProps={{ 'aria-label': 'search' }}
+          onChange={(e) => setTerm(e.target.value)}
         />
-        <Button variant="outlined" color="success" sx={{m: '10px', color: 'green' }}>Search</Button>
+        <Button
+        component={Link}
+        to={`/search`}
+        variant="outlined" 
+        color="success" 
+        sx={{m: '10px', color: 'green' }}
+        onClick={handleSearchTerm}
+        >
+          Search
+        </Button>
       </Search>
     </Fragment>
   )

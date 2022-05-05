@@ -25,7 +25,6 @@ function Favorites() {
 
   }, [favoriteMovies, movies])
   
-  console.log(findFavoriteMovies)
   return (
     <Fragment>
     <Hero />
@@ -34,7 +33,7 @@ function Favorites() {
       {favoriteMovies?.length < 1 ? (
         <div>Loading.....</div>
         ): (
-          <Grid container xs={10} sx={{ display: 'flex', justifyContent: 'flex-start', ml: 25 }}>
+          <Grid item container xs={10} sx={{ display: 'flex', justifyContent: 'flex-start', ml: 25 }}>
             {/* <Grid item sx={{display: 'flex', justifyContent: 'center',}}> */}
               {findFavoriteMovies.map(movie => (
                 <Card movies={[movie]} key={movie.id}/>

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Grid, ImageListItem } from '@mui/material';
 
 function Card({ movies }) {
-  console.log(movies)
   return (
     <Grid item container xs={2} >
       {movies.map((movie) => (

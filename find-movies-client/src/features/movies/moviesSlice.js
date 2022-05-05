@@ -6,6 +6,7 @@ import moviesService from '../../services/movieApi.service';
 const initialState = {
     movies: [],
     favoriteMovies: [],
+    searchedMovies: [],
     movieDetail: [],
     isLoading: false,
     favIsLoading: false,
@@ -65,9 +66,12 @@ export const moviesSlice = createSlice({
         addToFavorites: (state, action) => {
             state.favoriteMovies[0].favorites.push(action.payload);
         },
-        removeToFavorites: (state, action) => {
+        removeFromFavorites: (state, action) => {
             state.favoriteMovies[0].favorites.pop(action.payload);
-        }
+        },
+        addToSearchedMovies: (state, action) => {
+            state.searchedMovies = action.payload;
+        },
     },
     extraReducers: {
         // fetch all movies
@@ -86,7 +90,6 @@ export const moviesSlice = createSlice({
         // fetch movie detail
         [fetchMovieDetail.pending]: state => {
             state.isLoading = true;
-            console.log(state.isLoading)
         },
         [fetchMovieDetail.fulfilled]: (state, action) => {
             state.isLoading = false;
@@ -117,7 +120,7 @@ export const moviesSlice = createSlice({
     }
 });
 
-export const { addToFavorites, removeToFavorites } = moviesSlice.actions;
+export const { addToFavorites, removeFromFavorites, addToSearchedMovies } = moviesSlice.actions;
 
 export const allMovies = (state) => state.movies.movies;
 export const allFavoriteMovies = state => state.movies.favoriteMovies;
