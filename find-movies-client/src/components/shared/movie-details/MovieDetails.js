@@ -29,11 +29,9 @@ function MovieDetails({ movies }) {
         action
       }
       if(e.target.innerText === 'ADD TO FAVORITE') {
-        // movieAndCollectionId.action = 'push';
         dispatch(updateFavoriteMovie(movieAndCollectionId));
         dispatch(addToFavorites(movie.id));
       } else {
-        // movieAndCollectionId.action = 'pull';
         dispatch(updateFavoriteMovie(movieAndCollectionId));
         dispatch(removeFromFavorites(movie.id));
       }

@@ -8,8 +8,8 @@ const initialState = {
     favoriteMovies: [],
     searchedMovies: [],
     movieDetail: [],
+    commentAndRating: [],
     isLoading: false,
-    favIsLoading: false,
     error: null,
 };
 
@@ -59,6 +59,24 @@ export const updateFavoriteMovie = createAsyncThunk(
     }
 )
 
+export const postMovieCommentRating = createAsyncThunk(
+    'movies/postMovieCommentRating',
+    async (data) => {
+        const movie = await favoriteMoviesService.postCommentRating(data);
+
+        return movie;
+    }
+)
+
+export const getMovieCommentRating = createAsyncThunk(
+    'movie/getMovieCommentRating',
+    async (movieId) => {
+        const movie = await favoriteMoviesService.getCommentRating(movieId);
+console.log(movie)
+        return movie;
+    }
+)
+
 export const moviesSlice = createSlice({
     name: 'movies',
     initialState,
@@ -72,6 +90,7 @@ export const moviesSlice = createSlice({
         addToSearchedMovies: (state, action) => {
             state.searchedMovies = action.payload;
         },
+        
     },
     extraReducers: {
         // fetch all movies
@@ -88,9 +107,6 @@ export const moviesSlice = createSlice({
         },
 
         // fetch movie detail
-        [fetchMovieDetail.pending]: state => {
-            state.isLoading = true;
-        },
         [fetchMovieDetail.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.movieDetail = action.payload[0].show;
@@ -101,20 +117,27 @@ export const moviesSlice = createSlice({
         },
 
         // fetch all favorite movies
-        [getFavoriteMovies.pending]: state => {
-            state.favIsLoading = true;
-        },
         [getFavoriteMovies.fulfilled]: (state, action) => {
-            state.favIsLoading = false;
             state.favoriteMovies = action.payload.favorites;
         },
         [getFavoriteMovies.rejected]: (state, action) => {
-            state.favIsLoading = false;
             state.error = action.payload;
         },
 
+        // post and get comments and rating 
+        [postMovieCommentRating.rejected]: (state, action) => {
+            state.error = action.payload;
+        },
+        [getMovieCommentRating.fulfilled]: (state, action) =>{
+            console.log(action.payload)
+            state.commentAndRating = action.payload.movieCommentAndRating;
+        },
+        [getMovieCommentRating.rejected]: (state, action) => {
+            state.error = action.payload;
+        },
+        
+        // post favorite movie
         [postFavoriteMovie.fulfilled]: (state, action) => {
-            console.log(action.payload.favorites)
             state.favoriteMovies.push(action.payload.favorites);
         }
     }

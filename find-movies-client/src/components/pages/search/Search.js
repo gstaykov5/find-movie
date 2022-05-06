@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Grid, Typography } from '@mui/material';
@@ -9,7 +9,9 @@ import MovieDetails from '../../shared/movie-details/MovieDetails';
 import SearchInput from '../../shared/search/SearchInput';
 
 function Search() {
-  const { isLoading, searchedMovies } = useSelector(state => state.moviesReducer);
+  const [notFound, setNotFound] = useState('Movie is not found');
+
+  const { searchedMovies } = useSelector(state => state.moviesReducer);
 
   return (
     <div>
@@ -33,8 +35,8 @@ function Search() {
       }}
       >
       <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center'}}>
-        {isLoading ? (
-          <div>Loading...</div>
+        {searchedMovies.length === 0 ? (
+          <Typography variant='h3' mt={3}>{notFound}</Typography>
         ) : (
         <>
           <Card movies={searchedMovies} />

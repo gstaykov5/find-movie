@@ -60,9 +60,11 @@ function SearchInput() {
   const { movies } = useSelector(state => state.moviesReducer);
 
   const handleSearchTerm = () => {
-    const search = movies.filter(movie => movie.name.toLowerCase().includes(term.toLowerCase()));
-    dispatch(addToSearchedMovies(search));
-    setTerm('')
+    if(term.trim() !== '') {
+      const search = movies.filter(movie => movie.name.toLowerCase().includes(term.toLowerCase()));
+      dispatch(addToSearchedMovies(search));
+      setTerm('');
+    }
   }
   
   return (

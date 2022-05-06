@@ -33,10 +33,33 @@ const updateFavoriteMovie = async (movieId, collectionId, action) => {
     return res;
 }
 
+const postCommentRating = async (data) => {
+    console.log(data)
+    const req = await fetch(`${API_URL}/comment-rating/details`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const res = req.json();
+
+    return res;
+}
+
+const getCommentRating = async (movieId) => {
+    const req = await fetch(`${API_URL}/comment-rating/details/${movieId}`);
+    const res = await req.json();
+
+    return res;
+}
+
 const favoriteMoviesService = {
     postFavoriteMovie,
     getFavoriteMovies,
     updateFavoriteMovie,
+    postCommentRating,
+    getCommentRating,
 };
 
 export default favoriteMoviesService;
